@@ -1,0 +1,24 @@
+{
+    "logger": {
+        "server": {
+            "name": "armentum-api-srv",
+            "file": {
+                "type": "rotating-file",
+                "level": "trace",
+                "path": "/log/armentum-api-srv.log",
+                "period": "1d",
+                "count": 5
+            }
+        },
+        "app": {
+            "name": "armentum-api",
+            "file": {
+                "type": "rotating-file",
+                "level": "trace",
+                "path": "/log/armentum-api.log",
+                "period": "1d",
+                "count": 5
+            }
+        }
+    }
+}

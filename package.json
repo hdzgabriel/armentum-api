@@ -1,0 +1,31 @@
+{
+  "name": "armentum-api",
+  "version": "1.0.0",
+  "description": "Armentum REST API",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hdzgabriel/armentum-api.git"
+  },
+  "keywords": [
+    "armentum",
+    "rest",
+    "api"
+  ],
+  "author": "gihernandez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hdzgabriel/armentum-api/issues"
+  },
+  "homepage": "https://github.com/hdzgabriel/armentum-api",
+  "dependencies": {
+    "bunyan": "^1.3.5",
+    "mongoose": "^4.0.3",
+    "nconf": "^0.7.1",
+    "restify": "^3.0.2"
+  }
+}

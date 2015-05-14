@@ -1,0 +1,13 @@
+{
+    "server": {
+        "name": "api.armentum",
+        "port": 3000,
+        "version": "1.0.0",
+        "acceptable": ["application/json"],
+        "cors": {
+            "credentials": false,
+            "origins": [],
+            "headers": []
+        }
+    }
+}
