@@ -6,10 +6,17 @@ var EmpleadoSchema = new mongoose.Schema ({
 	apellidos: String,
 	nombres: String,
 	categoria: String,
-	ext_user: String,
+	activo: Boolean,
+    ext_user: String,
+    email: String,
+    email_alt: String,
+    movil: String,
+    movil_vpn: String,
+    telefono: String,
 	contratacion: [{contratacion_id: Number, activo: Boolean}],
 	equipodesa: [{equipodesa_id: Number, asignado: Date, activo: Boolean}],
-	asignaciones: [{rol_id: Number, rol_nivel: Number, asignado: Date}]
+    perfiles: [Number],
+	asignaciones: [Number]
 });
 
 mongoose.model('Empleado', EmpleadoSchema, 'empleados');
