@@ -104,7 +104,7 @@ function createServer (options) {
     server.post('/armentum/api/empleados/', empleados.createEmpleado);
     server.put('/armentum/api/empleados/:id', empleados.updateEmpleado);
     server.del('/armentum/api/empleados/:id', empleados.deleteEmpleado);
-    server.put('/armentum/api/empleados/:id/asignaciones', empleados.updateEmpleado); //Se actualizan las asignaciones del Empleado.
+    //server.put('/armentum/api/empleados/:id/asignaciones', empleados.updateEmpleado); //Se actualizan las asignaciones del Empleado.
     
     //Roles
     server.get('/armentum/api/roles', roles.listRoles);

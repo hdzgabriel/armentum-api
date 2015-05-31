@@ -1,14 +1,14 @@
 var mongoose = require('mongoose');
 
 var EmpleadoSchema = new mongoose.Schema ({
-    _id: String,
+    _id: {type: String, required: true},
 	no_empleado: String,
-	apellidos: String,
-	nombres: String,
+	apellidos: {type: String, required: true},
+	nombres: {type: String, required: true},
 	categoria: String,
-	activo: Boolean,
+	activo: {type: Boolean, required: true},
     ext_user: String,
-    email: String,
+    email: {type: String, required: true},
     email_alt: String,
     movil: String,
     movil_vpn: String,
