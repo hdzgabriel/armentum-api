@@ -58,6 +58,39 @@ function deleteEmpleado(req, res, next) {
 }
 
 function updateEmpleado(req, res, next) {
+    var log = req.log;
+    log.debug('updateEmpleado');
+    log.debug('req.body: ');
+    log.debug(req.body);
+    
+    if ( !req.body._id ) {
+        next(new restify.BadRequestError());
+    }
+    
+    var updatedEmpleado = new EmpleadoModel(req.body);
+    log.debug('Nuevo empleado: ' + updatedEmpleado);
+    
+    log.debug('Updating...');
+    EmpleadoModel.findByIdAndUpdate(updatedEmpleado._id, updatedEmpleado, {new: true, upsert: false}, function (err, doc) {
+        if (doc) {
+            log.info('Updated ' + doc);
+            res.json(200, doc);
+        } else {
+            if (err) {
+                log.error('Error updating doc ' + updatedEmpleado._id);
+                log.error(err);
+                err.status = 500;
+            } else {
+                err = new restify.InternalError();
+            }
+            next(err);
+        }
+    });
+    
+    
+    /*res.header("Access-Control-Allow-Origin", "*"); 
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    
     var id = req.params.id;
     log.debug('id: ' + id);
     if (!id) {next(new restify.BadRequestError());}
@@ -72,6 +105,22 @@ function updateEmpleado(req, res, next) {
 	log.debug('categoria: ' + categoria);
 	var extUser = req.body.ext_user;
 	log.debug('ext_user: ' + extUser);
+    var email = req.body.email;
+    log.debug('email: ' + email);
+    var email_alt = req.body.email_alt;
+    log.debug('email_alt: ' + email_alt);
+    var movil = req.body.movil;
+    log.debug('movil: ' + movil);
+    var movil_vpn = req.body.movil_vpn;
+    log.debug('movil_vpn: ' + movil_vpn);
+    var telefono = req.body.telefono;
+    log.debug('telefono: ' + telefono);
+    var contratacion = req.body.contratacion;
+    log.debug('contratacion: ' + contratacion);
+    var perfiles = req.body.perfiles;
+    log.debug('perfiles: ' + perfiles);
+    var asignaciones = req.body.asignaciones;
+    log.debug('asignaciones: ' + asignaciones);
     
     log.debug('Looking for id: ' + id);
     EmpleadoModel.findById(id, function (err, empleado) {
@@ -101,7 +150,7 @@ function updateEmpleado(req, res, next) {
             }
             next(err);
         }
-    });
+    });*/
 };
 
 function createEmpleado (req, res, next) {

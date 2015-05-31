@@ -17,6 +17,8 @@ var EmpleadoSchema = new mongoose.Schema ({
 	equipodesa: [{equipodesa_id: Number, asignado: Date, activo: Boolean}],
     perfiles: [Number],
 	asignaciones: [Number]
+}, {
+    _id: false
 });
 
 mongoose.model('Empleado', EmpleadoSchema, 'empleados');

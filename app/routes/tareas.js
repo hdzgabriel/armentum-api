@@ -38,6 +38,10 @@ function getTarea (req, res, next) {
     })
 };
 
+function saveTarea(req, res, next) {
+    log.debug("saveTarea");
+}
+
 module.exports = {
     listTareas: listTareas,
     getTarea: getTarea

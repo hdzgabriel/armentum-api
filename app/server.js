@@ -43,7 +43,44 @@ function createServer (options) {
         rate: 5,
         ip: true
     }));
+    
+    //Probar que pasa con credenciales.
+    var allowCrossDomain = function (req, res, next) {
+        req.log.debug('allowCrossDomain');
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        res.header('Access-Control-Allow-Headers', 'X-Requested-With, Accept, Origin, Referer, User-Agent, Content-Type, Authorization');
+        
+        if (req.method === 'OPTIONS') {
+            req.log.debug('############ OPTIONS #############');
+            res.send(200);
+        } else {
+            next();
+        }
+    };
+    
+    restify.CORS.ALLOW_HEADERS.push('authorization');
+    restify.CORS.ALLOW_HEADERS.push('sid');
+    restify.CORS.ALLOW_HEADERS.push('Accept-Encoding');
+    restify.CORS.ALLOW_HEADERS.push('lang');
+    restify.CORS.ALLOW_HEADERS.push('origin');
+    restify.CORS.ALLOW_HEADERS.push('withcredentials');
+    restify.CORS.ALLOW_HEADERS.push('x-requested-with');
+    
     server.use(restify.CORS());
+    server.use(restify.fullResponse());
+    
+    //server.configure(function(){
+    //    server.use(allowCrossDomain);
+    //    server.use(server.router);
+    //});
+    
+    /*server.use( function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        return next();
+    });*/
+    
     server.use(restify.acceptParser(server.acceptable));
     server.use(restify.dateParser());
     server.use(restify.authorizationParser());
@@ -55,12 +92,19 @@ function createServer (options) {
     
     server.on('after', restify.auditLogger({log: options.log}));
     
+    // Options
+    //server.opts(/\.*/, function(req, res, next){
+    //    req.log.debug('OPTIONS');
+    //    res.send(200);next();
+    //});
+    
     //Empleados
     server.get('/armentum/api/empleados', empleados.listEmpleados);
     server.get('/armentum/api/empleados/:id', empleados.getEmpleado);
     server.post('/armentum/api/empleados/', empleados.createEmpleado);
-    server.patch('/armentum/api/empleados/:id', empleados.updateEmpleado);
+    server.put('/armentum/api/empleados/:id', empleados.updateEmpleado);
     server.del('/armentum/api/empleados/:id', empleados.deleteEmpleado);
+    server.put('/armentum/api/empleados/:id/asignaciones', empleados.updateEmpleado); //Se actualizan las asignaciones del Empleado.
     
     //Roles
     server.get('/armentum/api/roles', roles.listRoles);
@@ -77,10 +121,12 @@ function createServer (options) {
     //Asignaciones
     server.get('/armentum/api/asignaciones', asignaciones.listAsignaciones);
     server.get('/armentum/api/asignaciones/:id', asignaciones.getAsignacion);
+    server.post('/armentum/api/asignaciones/', asignaciones.createAsignacion);
     
     //Proyectos
     server.get('/armentum/api/proyectos', proyectos.listProyectos);
     server.get('/armentum/api/proyectos/:id', proyectos.getProyecto);
+    server.get('/armentum/api/proyectos', proyectos.getProyectByKeyword);
     
     //Tareas
     server.get('/armentum/api/tareas', tareas.listTareas);
